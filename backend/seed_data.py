@@ -78,7 +78,7 @@ PRODUCTS = [
     },
     {
         "name": "Contemporary Formal Shirt", "sku": "ALD-SH-001", "slug": "contemporary-formal-shirt",
-        "category_slug": "shirts", "images": [SHIRTS_IMG, SHIRT2], "mrp": 1799,
+        "category_slug": "shirts", "images": [SHIRTS_IMG], "mrp": 2199,
         "colors": ["White", "Sky Blue", "Charcoal"], "sizes": ["38", "40", "42", "44"],
         "fabric": "Premium cotton", "fit": "Slim Fit",
         "description": "A crisp contemporary shirt in premium cotton with a modern collar and a clean, versatile finish.",
@@ -88,7 +88,7 @@ PRODUCTS = [
     },
     {
         "name": "Textured Casual Shirt", "sku": "ALD-SH-002", "slug": "textured-casual-shirt",
-        "category_slug": "shirts", "images": [SHIRT2, SHIRTS_IMG], "mrp": 1699,
+        "category_slug": "shirts", "images": [SHIRTS_IMG], "mrp": 2199,
         "colors": ["Sand", "Olive", "White"], "sizes": ["38", "40", "42", "44"],
         "fabric": "Cotton-linen blend", "fit": "Regular Fit",
         "description": "A relaxed textured shirt in a cotton-linen blend for breathable, refined casual styling.",
