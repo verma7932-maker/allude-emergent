@@ -16,7 +16,7 @@ export default function ProductCard({ product, index = 0 }) {
             src={img}
             alt={product.name}
             loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform [transition-duration:900ms] ease-out group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-neutral-300 font-wordmark text-4xl">ALLUDE</div>

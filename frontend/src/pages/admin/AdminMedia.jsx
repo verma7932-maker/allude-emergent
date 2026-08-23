@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
 import api, { mediaUrl } from "@/lib/api";
 import { PageHead, AdminButton } from "@/pages/admin/AdminUI";
@@ -8,8 +8,8 @@ export default function AdminMedia() {
   const [items, setItems] = useState([]);
   const [uploading, setUploading] = useState(false);
 
-  const load = () => api.get("/media").then((r) => setItems(r.data)).catch(() => {});
-  useEffect(() => { load(); }, []);
+  const load = useCallback(() => api.get("/media").then((r) => setItems(r.data)).catch(() => {}), []);
+  useEffect(() => { load(); }, [load]);
 
   const upload = async (e) => {
     const files = Array.from(e.target.files || []);

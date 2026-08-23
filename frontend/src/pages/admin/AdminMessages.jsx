@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
 import api from "@/lib/api";
 import { PageHead, AdminButton, Select } from "@/pages/admin/AdminUI";
@@ -12,8 +12,8 @@ export default function AdminMessages() {
   const [status, setStatus] = useState("");
   const [detail, setDetail] = useState(null);
 
-  const load = () => api.get("/contact-messages", { params: status ? { status } : {} }).then((r) => setList(r.data)).catch(() => {});
-  useEffect(() => { load(); /* eslint-disable-next-line */ }, [status]);
+  const load = useCallback(() => api.get("/contact-messages", { params: status ? { status } : {} }).then((r) => setList(r.data)).catch(() => {}), [status]);
+  useEffect(() => { load(); }, [load]);
 
   const updateStatus = async (id, s) => { await api.patch(`/contact-messages/${id}/status`, { status: s }); toast.success("Updated"); load(); if (detail?.id === id) setDetail({ ...detail, status: s }); };
   const del = async (id) => { if (!window.confirm("Delete this message?")) return; await api.delete(`/contact-messages/${id}`); toast.success("Deleted"); load(); setDetail(null); };

@@ -110,7 +110,7 @@ export default function Home() {
                   <Link to={`/collections/${c.slug}`} data-testid={`collection-card-${c.slug}`} className="group block">
                     <div className={`relative overflow-hidden bg-neutral-200 ${i === 1 ? "md:mt-12" : ""}`}>
                       <div className="aspect-[3/4]">
-                        <img src={mediaUrl(c.image)} alt={c.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-105" />
+                        <img src={mediaUrl(c.image)} alt={c.name} loading="lazy" className="w-full h-full object-cover transition-transform [transition-duration:900ms] group-hover:scale-105" />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                       <div className="absolute bottom-0 left-0 p-7">

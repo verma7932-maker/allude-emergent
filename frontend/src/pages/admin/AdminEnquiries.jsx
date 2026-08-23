@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
 import api from "@/lib/api";
 import { PageHead, AdminButton, Input, Select } from "@/pages/admin/AdminUI";
@@ -13,11 +13,11 @@ export default function AdminEnquiries() {
   const [filters, setFilters] = useState({ search: "", city: "", state: "", business_type: "", status: "" });
   const [detail, setDetail] = useState(null);
 
-  const load = () => {
+  const load = useCallback(() => {
     const params = Object.fromEntries(Object.entries(filters).filter(([, v]) => v));
     api.get("/dealer-enquiries", { params }).then((r) => setList(r.data)).catch(() => {});
-  };
-  useEffect(() => { load(); /* eslint-disable-next-line */ }, [filters]);
+  }, [filters]);
+  useEffect(() => { load(); }, [load]);
 
   const setF = (k) => (e) => setFilters((f) => ({ ...f, [k]: e.target.value }));
 

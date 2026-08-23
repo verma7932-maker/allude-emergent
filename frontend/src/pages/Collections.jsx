@@ -35,7 +35,7 @@ export default function Collections() {
             >
               <div className={`lg:col-span-7 ${i % 2 === 1 ? "lg:order-2" : ""}`}>
                 <div className="aspect-[16/10] overflow-hidden bg-neutral-100">
-                  <img src={mediaUrl(c.image)} alt={c.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-105" />
+                  <img src={mediaUrl(c.image)} alt={c.name} loading="lazy" className="w-full h-full object-cover transition-transform [transition-duration:900ms] group-hover:scale-105" />
                 </div>
               </div>
               <div className="lg:col-span-5 flex flex-col justify-center p-8 md:p-14">

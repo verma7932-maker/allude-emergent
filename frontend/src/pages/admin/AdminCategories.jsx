@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
 import api, { mediaUrl } from "@/lib/api";
 import { PageHead, AdminButton, Input, Textarea, Field, slugify } from "@/pages/admin/AdminUI";
@@ -15,8 +15,8 @@ export default function AdminCategories() {
   const [form, setForm] = useState(blank);
   const [saving, setSaving] = useState(false);
 
-  const load = () => api.get("/categories", { params: { all: true } }).then((r) => setCats(r.data)).catch(() => {});
-  useEffect(() => { load(); }, []);
+  const load = useCallback(() => api.get("/categories", { params: { all: true } }).then((r) => setCats(r.data)).catch(() => {}), []);
+  useEffect(() => { load(); }, [load]);
 
   const openNew = () => { setEditing(null); setForm(blank); setOpen(true); };
   const openEdit = (c) => { setEditing(c); setForm({ ...blank, ...c }); setOpen(true); };
@@ -67,8 +67,8 @@ export default function AdminCategories() {
               <p className="font-body text-sm text-neutral-500 line-clamp-2 mt-1">{c.description}</p>
             </div>
             <div className="flex flex-col gap-1">
-              <button onClick={() => move(i, -1)} className="p-1 border border-neutral-300 hover:border-neutral-900 disabled:opacity-30" disabled={i === 0}><ArrowUp size={14} /></button>
-              <button onClick={() => move(i, 1)} className="p-1 border border-neutral-300 hover:border-neutral-900 disabled:opacity-30" disabled={i === cats.length - 1}><ArrowDown size={14} /></button>
+              <button onClick={() => move(i, -1)} data-testid={`category-up-${c.slug}`} className="p-1 border border-neutral-300 hover:border-neutral-900 disabled:opacity-30" disabled={i === 0}><ArrowUp size={14} /></button>
+              <button onClick={() => move(i, 1)} data-testid={`category-down-${c.slug}`} className="p-1 border border-neutral-300 hover:border-neutral-900 disabled:opacity-30" disabled={i === cats.length - 1}><ArrowDown size={14} /></button>
             </div>
             <div className="flex gap-2">
               <button onClick={() => openEdit(c)} data-testid={`category-edit-${c.slug}`} className="p-2 border border-neutral-300 hover:border-neutral-900"><Pencil size={14} /></button>

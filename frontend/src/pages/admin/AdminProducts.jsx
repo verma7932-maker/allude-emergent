@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
 import api, { mediaUrl } from "@/lib/api";
 import { PageHead, AdminButton, Input, Textarea, Select, Field, slugify } from "@/pages/admin/AdminUI";
@@ -20,8 +20,8 @@ export default function AdminProducts() {
   const [form, setForm] = useState(blank);
   const [saving, setSaving] = useState(false);
 
-  const load = () => api.get("/products", { params: { all: true } }).then((r) => setProducts(r.data)).catch(() => {});
-  useEffect(() => { load(); api.get("/categories", { params: { all: true } }).then((r) => setCats(r.data)).catch(() => {}); }, []);
+  const load = useCallback(() => api.get("/products", { params: { all: true } }).then((r) => setProducts(r.data)).catch(() => {}), []);
+  useEffect(() => { load(); api.get("/categories", { params: { all: true } }).then((r) => setCats(r.data)).catch(() => {}); }, [load]);
 
   const openNew = () => { setEditing(null); setForm(blank); setOpen(true); };
   const openEdit = (p) => { setEditing(p); setForm({ ...blank, ...p, mrp: p.mrp ?? "" }); setOpen(true); };
