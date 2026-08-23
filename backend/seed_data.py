@@ -2,7 +2,7 @@
 
 FORMAL_IMG = "/products/formal-trouser.png"
 CASUAL_IMG = "/products/casual-trouser.png"
-SHIRTS_IMG = "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"
+SHIRTS_IMG = "/products/shirt.png"
 HERO_IMG = "https://images.unsplash.com/photo-1603530066858-c589c83d99bd?crop=entropy&cs=srgb&fm=jpg&q=85&w=1600"
 ABOUT_IMG = "https://images.pexels.com/photos/1719463/pexels-photo-1719463.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1200"
 MADE_IMG = "https://images.unsplash.com/photo-1568288796918-03e7d93306bd?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"

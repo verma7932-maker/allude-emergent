@@ -56,7 +56,7 @@ export default function Home() {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="kicker text-white/70 mb-4">Established 2020 · Made in India</p>
-            <h1 className="font-wordmark uppercase leading-none text-white text-6xl sm:text-7xl md:text-8xl lg:text-[9rem]" style={{ letterSpacing: "0.12em" }}>ALLUDE</h1>
+            <Wordmark dark className="h-16 sm:h-20 md:h-28 lg:h-36" dataTestId="hero-wordmark" />
             <p className="font-display text-xl md:text-3xl text-white/90 mt-4 tracking-tight">
               {hp.hero_subtitle}
             </p>
