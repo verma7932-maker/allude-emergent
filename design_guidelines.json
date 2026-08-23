@@ -1,0 +1,103 @@
+{
+  "brand": {
+    "name": "ALLUDE INDIA",
+    "tagline": "Crafted for the Modern Gentleman",
+    "established": 2020,
+    "market": "India only",
+    "aesthetic": "Premium luxury menswear, clean editorial, stark white background, no generic SaaS looks."
+  },
+  "typography": {
+    "fonts": {
+      "wordmark": "Playfair Display, serif",
+      "headings": "Cabinet Grotesk, sans-serif",
+      "body": "Satoshi, sans-serif"
+    },
+    "rules": {
+      "wordmark": "ALL CAPS, tracking-[0.2em] or tracking-widest, clean black lettering, no shadows.",
+      "headings": "Bold, strong, tracking-tight. Uppercase for category/section titles. NO INTER.",
+      "body": "Clean, readable, leading-relaxed. DO NOT center-align paragraphs."
+    }
+  },
+  "colors": {
+    "theme": "Light mode exclusively. No dark mode.",
+    "background": {
+      "primary": "#FFFFFF",
+      "secondary": "#F9F9F9",
+      "tertiary": "#F4F4F0"
+    },
+    "text": {
+      "primary": "#111111",
+      "secondary": "#666666",
+      "muted": "#999999",
+      "overlay": "#FFFFFF"
+    },
+    "border": {
+      "default": "#E5E5E5",
+      "dark": "#111111"
+    },
+    "interactive": {
+      "button_bg": "#111111",
+      "button_text": "#FFFFFF",
+      "button_hover": "#333333"
+    }
+  },
+  "visual_enhancers": {
+    "borders": "1px solid, sharp edges (rounded-none).",
+    "shadows": "Minimal ambient shadows or none. No heavy drop-shadows. Flat architectural aesthetic preferred.",
+    "spacing": "Generous. Use p-12, p-16, py-24, py-32. The layout MUST breathe.",
+    "glassmorphism": "Only for sticky headers if needed, otherwise solid white backgrounds. For glass: backdrop-blur-xl bg-white/70 with 1px border-b border-black/5.",
+    "animations": "Subtle, deliberate. Fade-ins, slow image scales on hover. Respect prefers-reduced-motion."
+  },
+  "layouts": {
+    "hero": "h-[90vh] to h-screen. Image hero, text overlay must be legible. If gradient used: bg-black/30 max. No heavy black blankets.",
+    "editorial_sections": "Asymmetric grids. For example, a 12-col grid where image takes col-span-7 and text col-span-4 with a gap. Offset images.",
+    "product_grid": "Minimalist grid. No card borders. Just image, Title below, Category, 'Explore'. Align text left.",
+    "stats": "Massive typography (text-6xl or fluid clamp) for stats. Monotone, authoritative.",
+    "admin_dashboard": "Sharp, cardless or flat-bordered Shadcn components, dense data layout, high utility."
+  },
+  "components": {
+    "navigation": "Header must have white or glass background. Bold uppercase links. Dropdown for Collections.",
+    "button": "Sharp corners (rounded-none). px-8 py-4. High contrast (black bg, white text). Text uppercase, wide tracking.",
+    "footer": "Premium white footer. py-24. Huge 'ALLUDE' typography. Minimal links.",
+    "forms": "Use Shadcn forms but strip generic styles. Flat inputs, 1px border border-gray-300, rounded-none. Focus: border-black ring-0."
+  },
+  "pages_structure": {
+    "homepage": [
+      "Premium Header",
+      "Full-screen cinematic hero",
+      "Brand Introduction ('CONTEMPORARY MENSWEAR. REFINED BY DESIGN.')",
+      "Explore Collections (3 distinct editorial shots)",
+      "Featured Products Grid",
+      "About Allude (Split layout)",
+      "Design Innovation Excellence (Stat blocks: 2020 Est / 100% Quality / PAN INDIA / INNOVATION)",
+      "Made in India",
+      "Our Strengths (5 items with line icons)",
+      "Why Connect With Us? (4 items)",
+      "Dealer Enquiry CTA",
+      "Contact CTA",
+      "Premium Footer"
+    ]
+  },
+  "media": {
+    "image_urls": {
+      "hero_cinematic": "https://images.pexels.com/photos/16749990/pexels-photo-16749990.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "about_editorial": "https://images.pexels.com/photos/1719463/pexels-photo-1719463.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "category_formal_trousers": "https://images.unsplash.com/photo-1617137968427-85924c800a22?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwxfHxtZW5zJTIwZm9ybWFsJTIwdHJvdXNlcnMlMjB0YWlsb3Jpbmd8ZW58MHx8fHwxNzg3NDgxOTUwfDA&ixlib=rb-4.1.0&q=85",
+      "category_casual_trousers": "https://images.unsplash.com/photo-1618001789159-ffffe6f96ef2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwyfHxtZW5zJTIwZm9ybWFsJTIwdHJvdXNlcnMlMjB0YWlsb3Jpbmd8ZW58MHx8fHwxNzg3NDgxOTUwfDA&ixlib=rb-4.1.0&q=85",
+      "category_shirts": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwxfHxtZW5zJTIwcHJlbWl1bSUyMHNoaXJ0JTIwZm9sZGVkfGVufDB8fHx8MTc4NzQ4MTk1MHww&ixlib=rb-4.1.0&q=85",
+      "featured_shirts_folded": "https://images.unsplash.com/photo-1562157873-818bc0726f68?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwyfHxtZW5zJTIwcHJlbWl1bSUyMHNoaXJ0JTIwZm9sZGVkfGVufDB8fHx8MTc4NzQ4MTk1MHww&ixlib=rb-4.1.0&q=85",
+      "tailoring_innovation": "https://images.pexels.com/photos/6766244/pexels-photo-6766244.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "brand_lifestyle": "https://images.unsplash.com/photo-1631052066165-9720608b36da?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHw0fHxtZW5zJTIwZm9ybWFsJTIwdHJvdXNlcnMlMjB0YWlsb3Jpbmd8ZW58MHx8fHwxNzg3NDgxOTUwfDA&ixlib=rb-4.1.0&q=85"
+    }
+  },
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Do NOT use HTML-based components for advanced user interactions. Use Shadcn components for forms, select, dialogs, etc., but customize them to remove generic SaaS rounded corners (make them rounded-none).",
+    "NEVER center-align paragraphs. Center alignment is only for hero text or specific headings.",
+    "Do NOT apply 'transition: all'. Apply specific transitions like 'transition-colors', 'transition-transform'.",
+    "Always use 'lucide-react' for minimal line icons.",
+    "All interactive elements MUST have a 'data-testid' attribute (e.g., data-testid='hero-explore-button').",
+    "Build the Admin Dashboard in a separate route (e.g., /admin) with a dense, utility-focused layout.",
+    "Do NOT use transparent backgrounds for dropdowns or modals.",
+    "Only build Light theme. The 'dark' mode classes should not be utilized since ALLUDE is a white-background luxury aesthetic."
+  ]
+}

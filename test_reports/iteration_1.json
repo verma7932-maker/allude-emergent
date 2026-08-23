@@ -1,0 +1,53 @@
+{
+  "summary": "Full backend + frontend E2E test of ALLUDE INDIA catalogue CMS. Backend: 28 pytest cases across auth, public catalogue, content, dealer enquiries, contact messages, products/categories CRUD + reorder, dashboard stats, media upload/serve/delete, SEO. 25 passed / 3 failed. Frontend: homepage (all 12 sections, hero, 3 collection cards, 3 featured products, footer), navbar Collections dropdown, mobile hamburger menu, collections -> category -> product detail flow (no cart/buy anywhere), dealer enquiry + contact form validation & successful submission, full admin CMS (login incl. wrong-password, all 11 nav sections, product create/edit/delete via dialog, enquiry status update + persistence, homepage content save, category dialog, logout, unauth redirect). All core flows work. 3 real defects found (SEO endpoints unreachable via ingress, email notification 422 undeliverable recipient, blank page on unknown routes) plus minor items.",
+  "backend_issues": {
+    "critical": [
+      {"endpoint": "GET /robots.txt and GET /sitemap.xml (root)", "issue": "Defined on the FastAPI app root, so the k8s ingress routes them to the React frontend (returns index.html / platform robots.txt). Verified working on localhost:8001 but NOT reachable on the public URL -> SEO files effectively dead in production. Serve them under /api/... and proxy, or emit static files from frontend/public.", "priority": "HIGH"},
+      {"endpoint": "POST /api/dealer-enquiries & /api/contact-messages (email notification)", "issue": "Emergent email API returns 422 'undeliverable_recipient': \"We couldn't verify that 'support@alludeindia.com' can receive email\". Payload format is correct (probe confirmed); the OWNER_EMAIL mailbox is unverifiable, so NO owner notification is ever delivered. Submissions still succeed (non-blocking, correct). Needs a deliverable OWNER_EMAIL (or delivered@resend.dev in preview) and the 422 body should be logged.", "priority": "HIGH"}
+    ],
+    "minor": [
+      {"endpoint": "POST /api/auth/login", "issue": "No brute-force protection: 6+ consecutive wrong passwords all return 401, no lockout/429/rate-limit (playbook requirement)."},
+      {"endpoint": "PUT /api/content/{key}", "issue": "Uses $set merge only, so keys removed by the admin UI persist forever in the content doc (no way to unset). Also no schema validation of the arbitrary `data` dict."},
+      {"endpoint": "DELETE /api/products/{id}, /api/categories/{id}, /api/dealer-enquiries/{id}, /api/contact-messages/{id}", "issue": "Return 200 {ok:true} for non-existent ids (no 404); silent no-op hides bad requests."},
+      {"endpoint": "POST /api/categories/reorder", "issue": "Accepts a raw List[str] body without a Pydantic model and does N sequential update_one calls; unknown ids are silently ignored."},
+      {"endpoint": "DELETE /api/categories/{id}", "issue": "No referential check - deleting a category leaves its products orphaned with a dangling category_slug."},
+      {"endpoint": "GET /api/products, /api/dealer-enquiries, /api/contact-messages", "issue": "No pagination (hard-coded to_list(1000/2000)); will silently truncate at scale."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "App.js routing", "issue": "No catch-all 404 route. Any unknown URL (e.g. /no-such-page-xyz) renders a completely blank white page with no navbar/footer.", "selector": "#root (empty)", "priority": "HIGH"},
+      {"component": "DealerEnquiry state dropdown", "issue": "Only 23 Indian states listed (24 options incl. placeholder); several states/UTs missing (e.g. Uttarakhand/Jharkhand/UTs) for an India-only brand.", "selector": "[data-testid=\"dealer-state\"]", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Dealer Enquiry / Contact / Admin forms", "issues": ["State, Business Type and admin category/status dropdowns use native HTML <select> (browser default picker) instead of the shadcn Select used elsewhere - inconsistent with the premium editorial styling"]},
+      {"screen": "Homepage hero & category images", "issues": ["Hero image is a cropped casual streetwear shot (corduroy trousers + denim jacket) - off-brand for 'premium menswear / Crafted for the Modern Gentleman'", "Formal Trousers category/product images are full navy SUIT shots although the brand explicitly excludes suits"]},
+      {"screen": "Footer", "issues": ["Social links array is seeded empty so no social icons render (functional, but the site launches with no social presence)"]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/backend/tests/cleanup_test_data.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Expose robots.txt/sitemap.xml so they are reachable on the public URL (ingress only routes /api to backend)",
+    "Change OWNER_EMAIL to a deliverable address (email API rejects support@alludeindia.com with 422 undeliverable_recipient) and log the response body on failure",
+    "Add a catch-all <Route path='*'> 404 page in App.js (currently blank white screen)",
+    "Add login rate-limiting/lockout after 5 failed attempts",
+    "Return 404 on delete of non-existent ids; add pagination to list endpoints",
+    "Consider replacing native <select> with shadcn Select for design consistency; review hero/category imagery (suits shown despite no-suits rule)"
+  ],
+  "critical_code_review_comments": [
+    "Root-level routes (/robots.txt, /sitemap.xml) violate the /api-prefix ingress contract - unreachable externally.",
+    "PUT /api/content/{key} accepts an unvalidated arbitrary dict and merges with $set; add per-key Pydantic models and full-document replacement semantics.",
+    "No rate limiting on /api/auth/login; JWT valid for 7 days with no refresh/revocation.",
+    "Category delete does not cascade/validate products referencing category_slug.",
+    "email_service.send_email swallows the error body; log resp.text on non-2xx to surface integration failures like the current 422."
+  ],
+  "updated_files": ["/app/backend/tests/backend_test.py", "/app/backend/tests/cleanup_test_data.py"],
+  "success_rate": {"backend": "89% (25/28 pytest cases; failures = robots.txt, sitemap.xml, login lockout)", "frontend": "95% (all core flows pass; 404 route missing)"},
+  "seed_data_creation": "Created and then deleted: dealer enquiry 'TEST_UI Dealer' (+ API 'TEST_Dealer'), contact message 'TEST_UI Contact', product 'TEST_UI Product'/'TEST_Product', temp category, uploaded test PNG media, temp homepage content key. All cleaned via /app/backend/tests/cleanup_test_data.py; DB verified back to 3 categories / 6 products / 0 enquiries / 0 messages.",
+  "should_call_test_agent_after_fix": true,
+  "should_main_agent_self_test": false,
+  "test_credentials": "Admin alluderetailindia@gmail.com / Prad@9810851309&% - valid, login + Bearer token flow works; token stored in localStorage as allude_token and httpOnly cookie also set.",
+  "context_for_next_testing_agent": "Regression suite: /app/backend/tests/backend_test.py (pytest, uses REACT_APP_BACKEND_URL + /app/memory/test_credentials.md). Cleanup helper: tests/cleanup_test_data.py. Note testid naming: collections page items are `collections-item-{slug}` (NOT collection-card-*, which is homepage only); admin product rows use frontend slugify output (e.g. 'TEST_UI Product' -> 'testui-product'). Playbook checks verified: bcrypt $2b$ hash OK, httpOnly cookie set on login OK, CORS explicit origins + credentials OK, seed_admin updates password on change OK, brute-force lockout MISSING. Re-verify after fixes: robots/sitemap public reachability, email notification delivery, 404 route.",
+  "rca_of_the_issue": "1) robots/sitemap: registered on the FastAPI root app; the Kubernetes ingress forwards only /api/* to :8001, everything else to the React dev server, so requests return the SPA/platform robots.txt. Confirmed backend serves them correctly on localhost:8001. 2) Email: probe of https://integrations.emergentagent.com/api/v1/email/send with the current payload returned 422 {code: undeliverable_recipient} for support@alludeindia.com - the payload schema is fine, the recipient mailbox cannot be verified; enquiry/contact writes are unaffected because send failures are caught. 3) Blank page on unknown URLs: React Router has no path='*' route, so nothing (not even the PublicLayout) renders."
+}
